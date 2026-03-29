@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PolloS 🍗 Taste Your Expectations</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+/* Reset & base */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Roboto', sans-serif; background:#fef6f0; color:#333; line-height:1.5; transition: background 0.3s ease; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; transition: all 0.3s ease; }
+
+/* Sticky Header */
+header {
+    position: sticky;
+    top:0;
+    background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+    color:white;
+    padding: 20px 15px;
+    text-align:center;
+    z-index:1000;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    animation: slideDown 0.5s ease forwards;
+}
+@keyframes slideDown {
+    0% { transform: translateY(-100%); opacity:0; }
+    100% { transform: translateY(0); opacity:1; }
+}
+.logo { font-family:'Pacifico', cursive; font-size:32px; }
+.logo i { font-style:italic; }
+.logo span { color: #ffe066; display:block; margin-top:5px; font-weight:bold; font-size:16px; }
+
+/* Container */
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Input */
+#location {
+    width:100%;
+    padding:12px 15px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    margin-bottom:25px;
+    font-size:16px;
+    transition: all 0.3s ease;
+}
+#location:focus { border-color:#ff4d4d; outline:none; box-shadow:0 0 8px rgba(255,77,77,0.3); }
+
+/* Menu Section */
+h3 { margin-bottom:10px; font-size:22px; color:#ff4d4d; display:flex; align-items:center; gap:10px; }
+.menu {
+    display:flex;
+    gap:15px;
+    background:white;
+    border-radius:16px;
+    margin-bottom:20px;
+    padding:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    align-items:center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.menu:hover { transform: translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.15); }
+.menu img { width:90px; height:90px; border-radius:16px; object-fit:cover; transition: transform 0.3s ease; }
+.menu:hover img { transform: scale(1.05); }
+.menu-details { flex:1; display:flex; flex-direction:column; }
+.menu-details h4 { font-size:18px; margin-bottom:5px; }
+.price { font-weight:700; color:#ff4d4d; margin-bottom:10px; }
+.menu-details button {
+    border:none;
+    border-radius:10px;
+    padding:10px 0;
+    font-size:14px;
+    margin-bottom:5px;
+    font-weight:500;
+}
+.order-btn { background:#ff4d4d; color:white; }
+.add-btn { background:#ffb74d; color:white; }
+
+/* Qty Box */
+.qty-box { display:flex; gap:5px; margin-top:5px; }
+.qty-box button { flex:1; background:#eee; color:#333; font-weight:bold; }
+
+/* Cart Box */
+.cart-box {
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    background:#333;
+    color:white;
+    padding:15px;
+    width:90%;
+    max-width:320px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    font-size:14px;
+    z-index:1000;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.cart-box button { background:#ff4d4d; color:white; margin-top:8px; border-radius:10px; padding:8px; width:100%; }
+.cart-items { max-height:130px; overflow-y:auto; margin-top:10px; }
+
+/* Footer */
+.footer {
+    margin-top:30px;
+    padding:20px 15px;
+    background:#333;
+    color:white;
+    text-align:center;
+    border-radius:20px 20px 0 0;
+    box-shadow:0 -4px 12px rgba(0,0,0,0.1);
+}
+
+/* Smooth animations */
+.menu, #location, .cart-box, .footer { transition: all 0.3s ease; }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><i>PolloS</i><span>Taste Your Expectations</span></div>
+    <p>Fast Food Delivery Near Chuka University</p>
+</header>
+
+<div class="container">
+    <input type="text" id="location" placeholder="Enter your hostel or location">
+
+    <h3>🍗 Chicken</h3>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?chicken">
+        <div class="menu-details">
+            <h4>Drumsticks</h4>
+            <p class="price">KSh 80</p>
+            <button class="order-btn" onclick="orderSingle('Drumsticks - 80')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Drumsticks',80)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?chicken-wings">
+        <div class="menu-details">
+            <h4>Chicken Wings</h4>
+            <p class="price">KSh 50</p>
+            <button class="order-btn" onclick="orderSingle('Chicken Wings - 50')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Chicken Wings',50)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?chicken-breast">
+        <div class="menu-details">
+            <h4>Chicken Breast</h4>
+            <p class="price">KSh 100</p>
+            <button class="order-btn" onclick="orderSingle('Chicken Breast - 100')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Chicken Breast',100)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?steak">
+        <div class="menu-details">
+            <h4>Steak Cuts</h4>
+            <p class="price">KSh 30 / 50</p>
+            <button class="order-btn" onclick="orderSingle('Steak Cuts')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Steak Cuts',50)">Add to Cart</button>
+        </div>
+    </div>
+
+    <h3>🍟 Fries</h3>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?fries">
+        <div class="menu-details">
+            <h4>Regular Fries</h4>
+            <p class="price">KSh 50</p>
+            <button class="order-btn" onclick="orderSingle('Regular Fries - 50')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Regular Fries',50)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?fries">
+        <div class="menu-details">
+            <h4>Half Fries</h4>
+            <p class="price">KSh 70</p>
+            <button class="order-btn" onclick="orderSingle('Half Fries - 70')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Half Fries',70)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?fries">
+        <div class="menu-details">
+            <h4>Full Fries</h4>
+            <p class="price">KSh 140</p>
+            <button class="order-btn" onclick="orderSingle('Full Fries - 140')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Full Fries',140)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?loaded-fries">
+        <div class="menu-details">
+            <h4>Half Fries + Toppings</h4>
+            <p class="price">KSh 110</p>
+            <p>(sausage topping)</p>
+            <button class="order-btn" onclick="orderSingle('Half Fries with Toppings - 110')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Half Fries + Toppings',110)">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?loaded-fries">
+        <div class="menu-details">
+            <h4>Full Fries + Toppings</h4>
+            <p class="price">KSh 170</p>
+            <p>(sausage topping)</p>
+            <button class="order-btn" onclick="orderSingle('Full Fries with Toppings - 170')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Full Fries + Toppings',170)">Add to Cart</button>
+        </div>
+    </div>
+
+    <h3>🌭 Sausages</h3>
+
+    <div class="menu">
+        <img src="https://source.unsplash.com/90x90/?sausage">
+        <div class="menu-details">
+            <h4>Chicken Sausage</h4>
+            <p class="price">KSh 35</p>
+            <button class="order-btn" onclick="orderSingle('Chicken Sausage - 35')">Order Now</button>
+            <button class="add-btn" onclick="addToCart('Chicken Sausage',35)">Add to Cart</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="cart-box">
+    🛒 <span id="cart-count">0</span> items | 💰 KSh <span id="cart-total">0</span>
+    <div class="cart-items" id="cart-items"></div>
+    <button onclick="sendCart()">Order Cart</button>
+    <button onclick="clearCart()">Clear</button>
+</div>
+
+<div class="footer">
+</div>
+
+    <p>💳 PAYMENT: POCHI LA BIASHARA-0791174471 </p>
+    <p>You can reach us at 0791174471 </p>
+</div>
+
+<script>
+let cart = {};
+
+function addToCart(name, price) {
+    if(!cart[name]) cart[name] = {price:price, qty:0};
+    cart[name].qty++;
+    updateCart();
+}
+
+function removeItem(name) {
+    if(cart[name]) {
+        cart[name].qty--;
+        if(cart[name].qty <=0) delete cart[name];
+    }
+    updateCart();
+}
+
+function updateCart() {
+    let total = 0;
+    let count = 0;
+    let html = "";
+
+    for(let item in cart) {
+        let data = cart[item];
+        total += data.price * data.qty;
+        count += data.qty;
+
+        html += `${item} x${data.qty} = ${data.price*data.qty} KSh <div class='qty-box'>
+        <button onclick="addToCart('${item}',${data.price})">+</button>
+        <button onclick="removeItem('${item}')">-</button>
+        </div>`;
+    }
+
+    document.getElementById("cart-items").innerHTML = html;
+    document.getElementById("cart-total").innerText = total;
+    document.getElementById("cart-count").innerText = count;
+}
+
+function clearCart() { cart = {}; updateCart(); }
+
+function orderSingle(item) {
+    let loc = document.getElementById("location").value;
+    if(!loc) return alert("Enter location");
+    let url = `https://wa.me/254791174471?text=${encodeURIComponent("Order: "+item+" Location: "+loc)}`;
+    window.open(url);
+}
+
+function sendCart() {
+    let loc = document.getElementById("location").value;
+    if(!loc) return alert("Enter location");
+
+    let msg = "Order:\n";
+    let total = 0;
+
+    for(let item in cart) {
+        let d = cart[item];
+        msg += `${item} x${d.qty} = ${d.price*d.qty} KSh\n`;
+        total += d.price*d.qty;
+    }
+
+    msg += `Total: ${total} KSh\nLocation: ${loc}`;
+    window.open(`https://wa.me/254791174471?text=${encodeURIComponent(msg)}`);
+}
+</script>
+ <footer>
+        <p>&copy; 2025 POLLOS CHUKA</p>
+    </footer>
+
+</body>
+</html>
